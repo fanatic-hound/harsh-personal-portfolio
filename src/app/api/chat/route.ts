@@ -1,22 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const pdf = require("pdf-parse");
 
-// Cache the resume text so we only parse the PDF once
+// Cache the resume text so we only read the file once
 let cachedResumeText: string | null = null;
 
 async function getResumeText(): Promise<string> {
   if (cachedResumeText) return cachedResumeText;
   try {
-    const pdfPath = path.join(process.cwd(), "public", "Harsh_Pal_CV.pdf");
-    const dataBuffer = fs.readFileSync(pdfPath);
-    const data = await pdf(dataBuffer);
-    cachedResumeText = data.text;
-    return cachedResumeText!;
+    // Read pre-extracted text version of the resume (generated from PDF)
+    const txtPath = path.join(process.cwd(), "public", "Harsh_Pal_CV.txt");
+    cachedResumeText = fs.readFileSync(txtPath, "utf-8");
+    return cachedResumeText;
   } catch (err) {
-    console.error("Failed to read resume PDF:", err);
+    console.error("Failed to read resume text:", err);
     return "(Resume could not be loaded)";
   }
 }

@@ -96,6 +96,10 @@ aside {
       left: -80px;
     }
 
+    .show-menu {
+      left: 0;
+    }
+
     .nav__toggle-open {
       left: 80px;
     }

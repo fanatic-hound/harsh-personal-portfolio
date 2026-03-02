@@ -1,0 +1,55 @@
+Harsh Pal
++ Bengaluru, India # theharshpal2306@gmail.com  +91 8368802064  Portfolio ð Harsh Pal
+Education
+Indian Institute of Technology, Roorkee
+Bachelor of Technology — CGPA: 8.19
+Nov 2020 – July 2024
+Experience
+Associate Software Engineer
+WiseTech Global Pvt. Ltd.
+Bengaluru, Karnataka
+July 2024 – Present
+◦ Optimized AWS cloud SSM API calls reducing by 60% via caching/batch retrieval, minimizing attack surface & costs.
+◦ Refactored monolithic service layers into modular APIs, leveraging multi-threading to parallelize complex calculation
+logic while maintaining SOLID-based maintainability and secure least-privilege patterns.
+◦ Developed enterprise-grade APIs featuring non-blocking I/O and asynchronous processing, optimizing the handling
+of high-concurrency workloads and ensuring reliable data delivery through robust, multi-threaded error-handling mechanisms.
+◦ Strengthened system security and resilience by implementing a robust exception handling framework for critical errors
+reducing downtime by 40%.
+◦ Implemented security change extenders to block backend modifications when entities are marked as closed, enforcing data
+integrity and strengthening access control in critical workflows.
+◦ Optimized database queries and API handling, reducing latency and increasing throughput for high-volume transactions.
+◦ Led the extraction of a production-critical service from a monorepo into a standalone repository while preserving full Git
+commit history, enabling independent CI/CD pipelines and zero-downtime production cutover.
+◦ Led cross-functional design and code reviews, improving architecture, testability, efficiency, and enforcing coding standards.
+◦ Conducted security-aware debugging of production issues through log analysis, metric monitoring, and anomaly detection,
+identifying potential security incidents and implementing root cause fixes to improve system stability.
+◦ Automated CI/CD code quality checks with Bash, pylint, mypy, and isort to ensure consistent quality across teams.
+Research Intern
+University of Victoria
+Victoria, BC, Canada
+May 2023 – Aug 2023
+◦ Did research & publication focused on micromechanical modeling of thermal conductivity in wood composites.
+◦ Developed thermal conductivity equations for diverse cross-laminated timber panels, for different scenarios.
+Projects
+Curio.Ai - AI Powered Personalized Learning Platform 2 | Java, Spring Boot, REST APIs, AI/ML
+◦ Developed an AI-driven backend platform to deliver personalized learning paths by analyzing user data & learning patterns.
+◦ Designed scalable REST APIs with modular architecture to support adaptive content recommendations and future system
+integrations.
+AR Based Game 2 | C#, Unity Game Engine, Visual Studio
+◦ Developed a 3D FPS Mobile Game in Unity, incorporating AR technology for enhanced player immersion.
+◦ Utilized AR Foundation to seamlessly integrate virtual enemies into real-world environments through the device camera.
+AI Enabled Blogging Platform 2 | TypeScript, Node.js, Next.js, Jest
+◦ Built a production-ready blogging platform with secure auth, full blog creation & management and responsive UI.
+◦ Implemented comprehensive unit tests for core workflows using modern testing libraries to ensure reliability & maintainability.
+Technical Skills
+Languages: C++, C#, Java, Python
+Technologies: .NET, Unity, Next.js, React.js, Node.js, Spring Boot
+Concepts: Low-Level Design, Concurrency & Multi-threading, Data Structures & Algorithms, OOP, Databases
+Tools & Platforms: Git, CI/CD, PostgreSQL, NUnit, Moq, Bash
+Soft Skills: Communication, Team collaboration, Problem-solving, Adaptability, Time-management.
+Achievements
+◦ Won Professional Development & Innovation Award – IIT Roorkee Convocation 2024
+◦ Globalink Research Fellow – 12-week fully-funded research program in Canada
+◦ Specialist on Codeforces 2 & Knight on LeetCode 2; solved 1,000+ problems across major competitive programming platforms.
+Harsh Pal - Page 1 of 1
