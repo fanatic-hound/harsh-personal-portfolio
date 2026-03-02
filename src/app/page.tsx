@@ -8,6 +8,7 @@ import About from '../components/About';
 import WorkExperience from '../components/WorkExperience';
 import Projects from '../components/Projects';
 import Contact from '../components/Contact';
+import ChatBot from '../components/ChatBot';
 import {Analytics} from "@vercel/analytics/react";
 
 export default function Home(): JSX.Element {
@@ -30,6 +31,7 @@ export default function Home(): JSX.Element {
       {/* Landing Page */}
       {isLandingVisible && <Landing setIsLandingVisible={setIsLandingVisible} />}
       {!isLandingVisible && <Navbar />}
+      {!isLandingVisible && <ChatBot />}
 
       {/* Main Content */}
       {!isLandingVisible && (

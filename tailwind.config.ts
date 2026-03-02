@@ -36,6 +36,10 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(-20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
       },
       animation: {
         slideFromBottom: 'slideFromBottom 1s ease-in-out',
@@ -43,6 +47,7 @@ const config: Config = {
         slideInFromLeft: 'slideInFromLeft 1s ease-in-out',
         slideInFromRight: 'slideInFromRight 1s ease-in-out',
         fadeIn: 'fadeIn 2s ease-in-out',
+        slideUp: 'slideUp 0.3s ease-out',
       },
     },
   },
