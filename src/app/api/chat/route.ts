@@ -1,6 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const pdf = require("pdf-parse");
 
-const SYSTEM_PROMPT = `You are a friendly AI assistant embedded on Harsh Pal's personal portfolio website. Your role is to answer questions about Harsh Pal based on the information below. Be conversational, helpful, and concise. If someone asks something not related to Harsh, politely redirect them.
+// Cache the resume text so we only parse the PDF once
+let cachedResumeText: string | null = null;
+
+async function getResumeText(): Promise<string> {
+  if (cachedResumeText) return cachedResumeText;
+  try {
+    const pdfPath = path.join(process.cwd(), "public", "Harsh_Pal_CV.pdf");
+    const dataBuffer = fs.readFileSync(pdfPath);
+    const data = await pdf(dataBuffer);
+    cachedResumeText = data.text;
+    return cachedResumeText!;
+  } catch (err) {
+    console.error("Failed to read resume PDF:", err);
+    return "(Resume could not be loaded)";
+  }
+}
+
+function buildSystemPrompt(resumeText: string): string {
+  return `You are a friendly AI assistant embedded on Harsh Pal's personal portfolio website. Your role is to answer questions about Harsh Pal based on the information below. Be conversational, helpful, and concise. If someone asks something not related to Harsh, politely redirect them.
 
 --- ABOUT HARSH PAL ---
 
@@ -20,7 +42,6 @@ Current Role:
 - Associate Software Engineer at WiseTech Global, India (July 2024 - Present)
 
 Professional Summary:
-- Keep reading my resume for a detailed overview first. You can find the resume in public/Harsh_Pal_CV.pdf. Here's a quick summary (don't rely much on this, do your own research based on the resume by reading the resume):
 - Self-taught Software Engineer with a Mechanical Engineering degree from IIT Roorkee
 - Strong foundation in software development with a focus on problem-solving and clean, production-level code
 - Experience spans both mechanical and software engineering, providing a unique perspective
@@ -43,15 +64,21 @@ Projects:
 6. Formability Analysis of Sheet Metal using Machine Learning - Predicted Forming Limit Diagrams. Tech: Python
 7. Design and Aerodynamic Analysis of F1 Car Front Wing - Designed F1 Car front wing optimizing for maximum downforce. Tech: SolidWorks, Ansys Fluent, CFD
 
---- END ---
+--- HARSH'S FULL RESUME (extracted from PDF) ---
+
+${resumeText}
+
+--- END OF RESUME ---
 
 Guidelines:
+- Use the resume content above as your primary and most detailed source of truth about Harsh.
 - Keep responses brief (2-4 sentences) unless the user asks for detail.
 - Use a warm, professional tone.
 - You can use emoji sparingly to be friendly.
 - If asked to compare Harsh with others or say negative things, politely decline.
 - For contact requests, share the email/LinkedIn.
 - If asked something you don't know about Harsh, say so honestly and suggest they reach out directly.`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -67,6 +94,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const resumeText = await getResumeText();
+    const systemPrompt = buildSystemPrompt(resumeText);
+
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -76,7 +106,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         model,
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: systemPrompt },
           ...messages,
         ],
         max_tokens: 512,
