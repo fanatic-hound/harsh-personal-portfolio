@@ -56,12 +56,12 @@ const About = () => {
   }, [aboutRef]);
 
   return (
-    <section id="about" ref={aboutRef} className='my-8 p-8 relative h-[100vh] overflow-y-auto'>
+    <section id="about" ref={aboutRef} className='my-4 sm:my-8 p-4 sm:p-8 relative overflow-y-auto'>
       {/* <Card> */}
       <Headers text="About Me" />
-        <section className={`${fadeIn ? "fadeIn" : ""} p-8 sm:flex mx-auto w-screen-lg`}>
-          <div className="grid w-4/5 mx-auto my-5 sm:grid-cols-[1fr] sm:p-[0.5rem] md:grid-cols-[3fr_9fr] gap-8 p-8 animate-fadeIn justify-center">
-          <div className="relative inline-block justify-center items-center pl-6 pb-2 md:pl-16 lg:pl-0 lg:pb-30 md:flex md:justify-center sm:pb-[2rem]">
+        <section className={`${fadeIn ? "fadeIn" : ""} p-2 sm:p-4 md:p-8 mx-auto max-w-screen-lg`}>
+          <div className="grid w-full sm:w-11/12 md:w-full mx-auto my-5 grid-cols-1 sm:p-[0.5rem] md:grid-cols-[auto_1fr] gap-4 sm:gap-6 p-2 sm:p-4 md:p-6 animate-fadeIn justify-center items-center">
+          <div className="relative flex justify-center items-center md:flex md:justify-center">
           <div 
           className="relative group" // Group container for image and overlay
           onMouseEnter={() => setIsHovered(true)}
@@ -97,7 +97,7 @@ const About = () => {
           </div>
           </div>
 
-            <div className="about__data custom-shadow grid text-[0.9rem] bg-[color:var(--container-color)] grid-cols-[repeat(1,1fr)] gap-x-[1.875rem] items-start relative p-4 rounded-[20px]">
+            <div className="about__data custom-shadow grid text-[0.8rem] sm:text-[0.9rem] bg-[color:var(--container-color)] grid-cols-[repeat(1,1fr)] gap-x-[1.875rem] items-start relative p-3 sm:p-4 rounded-[20px]">
               <div className="about__info">
                 <p className={`${poppins.className} about__description`}>
                   I&apos;m a passionate software developer with a Bachelor of Technology in Mechanical Engineering from the <a
@@ -141,7 +141,7 @@ const About = () => {
                   I love coding and am always eager to explore and solve problems, whether they are related to mechanical or software engineering.<br /><br />
                   Here are a few technologies I have worked on:
                 </p>
-                <ul className={`${anonymousPro.className} grid text-[0.7rem] grid-cols-[repeat(2,1fr)] mb-4`}>
+                <ul className={`${anonymousPro.className} grid text-[0.65rem] sm:text-[0.7rem] grid-cols-1 sm:grid-cols-[repeat(2,1fr)] mb-4`}>
                   <li className='relative pl-5 before:content-["▹"] before:absolute before:left-0'>C++</li>
                   <li className='relative pl-5 before:content-["▹"] before:absolute before:left-0'>C#</li>
                   <li className='relative pl-5 before:content-["▹"] before:absolute before:left-0'>Java</li>

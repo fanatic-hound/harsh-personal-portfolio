@@ -75,86 +75,84 @@ const Contact: React.FC<ContactProps> = () => {
   };
 
   return (
-    <section id="contacts" className={`relative ${fadeIn ? "fadeIn" : ""} p-8 relative h-screen`}>
+    <section id="contacts" className={`relative ${fadeIn ? "fadeIn" : ""} px-4 sm:px-8 py-8 sm:py-12`}>
       <Headers text="Get in Touch" />
 
-      <div className={`${playpenSans.className} grid md:w-3/5 mx-auto md:grid-cols-2 gap-8 p-8 animate-fadeIn`}>
-        <div className="text-center md:text-left">
-          <h3 className="text-sm md:text-2xl mb-2">Let&apos;s talk about everything!</h3>
-          <p className="text-sm md:text-lg mb-4">
+      <div className={`${playpenSans.className} max-w-3xl mx-auto mt-8 sm:mt-12 animate-fadeIn`}>
+        {/* Intro text - centered */}
+        <div className="text-center mb-8 sm:mb-10">
+          <h3 className="text-xl sm:text-2xl md:text-3xl mb-3 font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+            Let&apos;s talk about everything!
+          </h3>
+          <p className="text-sm sm:text-base md:text-lg text-gray-400">
             Don&apos;t like forms? Send me an email. 👋
           </p>
         </div>
 
-        <form onSubmit={submitHandler} className="space-y-5 md:space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="relative mb-6 h-8 md:h-16">
+        {/* Form card */}
+        <div className="custom-shadow bg-[color:var(--container-color)] rounded-2xl p-5 sm:p-8 md:p-10">
+          <form onSubmit={submitHandler} className="space-y-4 sm:space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
-                className="absolute top-0 left-0 w-full h-full custom-shadow bg-[color:var(--container-color)] border-none outline-none rounded-[1.875rem] p-4"
-                placeholder="Insert your name"
+                className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                placeholder="Your name"
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
-
-            <div className="relative mb-6 h-16">
               <input
                 type="email"
-                className="absolute top-0 left-0 w-full h-full custom-shadow bg-[color:var(--container-color)] border-none outline-none rounded-[1.875rem] p-4"
-                placeholder="Insert your email"
+                className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                placeholder="Your email"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-          </div>
 
-          <div className="relative mb-6 h-16">
             <input
               type="text"
-              className="absolute top-0 left-0 w-full h-full custom-shadow bg-[color:var(--container-color)] border-none outline-none rounded-[1.875rem] p-4"
-              placeholder="Insert your subject"
+              className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              placeholder="Subject"
               onChange={(e) => setSubject(e.target.value)}
             />
-          </div>
 
-          <div className="relative mb-6 h-40">
             <textarea
-              name=""
-              id=""
-              cols={30}
-              rows={10}
-              className="absolute top-0 left-0 w-full h-full custom-shadow bg-[color:var(--container-color)] border-none outline-none rounded-[1.875rem] p-4 resize-none"
-              placeholder="Write your message"
+              rows={5}
+              className="w-full bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl p-4 text-sm sm:text-base resize-none transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              placeholder="Write your message..."
               onChange={(e) => setMessage(e.target.value)}
             ></textarea>
-          </div>
 
-          <button type="submit" className={`${playpenSans.className} bg-transparent border-[color:var(--border-color)] text-base cursor-pointer transition-all duration-[0.5s] ease-[ease-in-out] font-medium text-center inline-block mr-5 p-2 rounded-full border-2 border-solid hover:bg-[color:var(--hover-background-color)] hover:text-[color:var(--text-color)] hover:border-[color:var(--border-color)]`}>
-            {loading ? "Sending..." : "Send Message"}
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-medium px-8 py-3 rounded-full cursor-pointer transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-95"
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+          </form>
+        </div>
         <ToastContainer position="bottom-right" theme={theme} />
       </div>
 
-      <div className="flex justify-center gap-4 mt-8">
-        <a href={`mailto:${gmail}`} target="_blank" rel="noopener noreferrer" className="text-current transition-colors duration-300 ease-in-out hover:scale-110 hover:text-gray-400">
-          <SiGmail size={20} />
+      {/* Social icons */}
+      <div className="flex justify-center gap-5 sm:gap-6 mt-10 sm:mt-12">
+        <a href={`mailto:${gmail}`} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
+          <SiGmail size={22} />
         </a>
-        <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-current transition-colors duration-300 ease-in-out hover:scale-110 hover:text-gray-400">
-          <FaInstagram size={20} />
+        <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
+          <FaInstagram size={22} />
         </a>
-        <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-current transition-colors duration-300 ease-in-out hover:scale-110 hover:text-gray-400">
-          <FaLinkedin size={20} />
+        <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
+          <FaLinkedin size={22} />
         </a>
-        <a href={leetcode} target="_blank" rel="noopener noreferrer" className="text-current transition-colors duration-300 ease-in-out hover:scale-110 hover:text-gray-400">
-          <SiLeetcode size={20} />
+        <a href={leetcode} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
+          <SiLeetcode size={22} />
         </a>
-        <a href={github} target="_blank" rel="noopener noreferrer" className="text-current transition-colors duration-300 ease-in-out hover:scale-110 hover:text-gray-400">
-          <FaGithub size={20} />
+        <a href={github} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
+          <FaGithub size={22} />
         </a>
       </div>
 
-      <footer className={`${playfairDisplay.className} text-center mt-8 text-gray-600`} style={{ fontSize: "15px", marginBottom: "10px" }}>
-        Made with ❤️<br /> by Harsh Pal
+      <footer className={`${playfairDisplay.className} text-center mt-8 sm:mt-10 pb-4 text-gray-500 text-sm`}>
+        Made with ❤️ by Harsh Pal
       </footer>
     </section>
   );

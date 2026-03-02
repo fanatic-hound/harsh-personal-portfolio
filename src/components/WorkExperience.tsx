@@ -27,15 +27,15 @@ const WorkExperience = () => {
   ];
     return (
     // <Card>
-      <section id="work-experience" className="p-8 relative h-[100vh]">
+      <section id="work-experience" className="p-4 sm:p-8 relative">
         <Headers text="Work Experience" />
-        <div className="w-full mx-auto p-12">
+        <div className="w-full mx-auto p-2 sm:p-6 md:p-12">
           <div className="timeline relative py-4 list-none">
         {workExperienceData.map((work, index) => (
           <div
             key={index}
-            className={`timeline-item flex flex-col md:flex-row justify-start items-center mb-12 md:ml-8 relative ${
-          index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            className={`timeline-item flex justify-start items-center mb-12 ml-8 relative ${
+          index % 2 === 0 ? "left" : "right"
             }`}
           >
             <a
@@ -44,7 +44,7 @@ const WorkExperience = () => {
             router.push("/");
           }}
             >
-          <div className="icon bg-purple-600 w-8 h-8 md:w-12 md:h-12 flex rounded-full text-white text-xl md:text-2xl absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 animate-slideInFromBottomWork transition-transform duration-300 ease hover:scale-110 cursor-pointer justify-center">
+          <div className="icon bg-purple-600 w-12 h-12 flex rounded-full text-white text-2xl absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 animate-slideInFromBottomWork transition-transform duration-300 ease hover:scale-110 cursor-pointer justify-center">
             <Image
               src="/images/WiseTech.png"
               alt="WiseTech"
@@ -55,13 +55,13 @@ const WorkExperience = () => {
           </div>
             </a>
             <div
-          className={`content bg-gradient-to-r from-pink-500 to-purple-500 p-2 md:p-4 rounded-lg shadow-md w-2/3 md:w-1/3 text-center text-white ${
+          className={`content bg-gradient-to-r from-pink-500 to-purple-500 p-4 rounded-lg shadow-md text-center text-white ${
             index % 2 === 0 ? "animate-slideInFromLeft" : "animate-slideInFromRight"
           }`}
             >
-          <h3 className={`${anonymousPro.className} mb-2 text-[10px] md:text-base`}>{work.role}</h3>
-          <p className={`${playpenSans.className} mb-1 text-[7px] md:text-sm`}>{work.company}</p>
-          <span className={`${playpenSans.className} text-[7px] md:text-sm text-gray-400`}>{work.date}</span>
+          <h3 className={`${anonymousPro.className} mb-2 text-base`}>{work.role}</h3>
+          <p className={`${playpenSans.className} mb-1 text-sm`}>{work.company}</p>
+          <span className={`${playpenSans.className} text-sm text-gray-400`}>{work.date}</span>
             </div>
           </div>
         ))}

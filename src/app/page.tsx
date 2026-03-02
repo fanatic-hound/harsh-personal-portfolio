@@ -22,7 +22,7 @@ export default function Home(): JSX.Element {
   ];
 
   return (
-    <div className="w-[100vw]">
+    <div className="w-full overflow-x-hidden">
       <Head>
         <link rel="icon" href="/favicon.png" />
         <title>Harsh Pal&apos;s Portfolio</title>
@@ -33,7 +33,7 @@ export default function Home(): JSX.Element {
 
       {/* Main Content */}
       {!isLandingVisible && (
-        <main className="p-4 ml-[100px]">
+        <main className="p-2 sm:p-4 ml-0 lg:ml-[100px] transition-all">
           <div className="sections-container">
             {sections.map((section, index) => (
               <div key={index} id={section.id} className="section">

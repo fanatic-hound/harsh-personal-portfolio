@@ -5,9 +5,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Full viewport height */
+  min-height: 100vh; /* Full viewport height minimum */
   text-align: center;
   overflow: visible;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .introContainer {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .introContainer {
+    margin-left: -50px; /* Offset half of navbar width to visually center on full screen */
+  }
 }
 
 /* Container for the intro content */
@@ -172,13 +185,20 @@
 .introButton {
   background-color: transparent;
   border: 2px solid var(--border-color);
-  padding: 8px 20px; /* Adjusted for smaller screens */
-  font-size: 0.9rem; /* Adjusted for smaller screens */
+  padding: 6px 14px; /* Smaller on mobile */
+  font-size: 0.75rem; /* Smaller on mobile */
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   border-radius: 9999px;
   color: var(--text);
   z-index: 2;
+}
+
+@media (min-width: 640px) {
+  .introButton {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
 }
 
 /* Hover styles for the button */

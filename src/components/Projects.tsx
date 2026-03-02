@@ -89,7 +89,7 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("Software");
 
   return (
-    <section id="projects" className="h-[100vh] relative overflow-y-auto">
+    <section id="projects" className="min-h-screen relative overflow-y-auto">
     {/* <Card> */}
     <section style={{ padding: '2rem' }} className="projects-section">
       <Headers text="Projects" />
