@@ -28,7 +28,7 @@ const projects = [
     // deployedUrl: "https://...",
   },
   {
-    title: "AI Powered Mini BBlogging Platform",
+    title: "AI Powered Mini Blogging Platform",
     description: "Developed an AI-ready mini blogging platform that is capable to answer users queries regarding the blogging platform and published blogs.",
     techStack: ["TypeScript", "Next.js", "OpenAI API"],
     category: "Software",
