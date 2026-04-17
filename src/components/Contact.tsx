@@ -30,12 +30,19 @@ const Contact: React.FC<ContactProps> = () => {
   const [subject, setSubject] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasSent, setHasSent] = useState<boolean>(false);
   const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setFadeIn(true);
     }, 250);
+    const lastSent = localStorage.getItem("contact_msg_sent");
+    if (lastSent && Date.now() - Number(lastSent) < 24 * 60 * 60 * 1000) {
+      setHasSent(true);
+    } else {
+      localStorage.removeItem("contact_msg_sent");
+    }
   }, []);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,6 +50,10 @@ const Contact: React.FC<ContactProps> = () => {
 
     if (!name || !email || !subject || !message) {
       return toast.error("Please complete the form above");
+    }
+
+    if (hasSent) {
+      return toast.error("You can only send one message per day. Please try again tomorrow!");
     }
 
     setLoading(true);
@@ -64,6 +75,8 @@ const Contact: React.FC<ContactProps> = () => {
       .then(
         () => {
           setLoading(false);
+          setHasSent(true);
+          localStorage.setItem("contact_msg_sent", String(Date.now()));
           toast.success(`Successfully sent email.`);
         },
         (error) => {
@@ -123,9 +136,10 @@ const Contact: React.FC<ContactProps> = () => {
 
             <button
               type="submit"
-              className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-medium px-8 py-3 rounded-full cursor-pointer transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-95"
+              disabled={hasSent || loading}
+              className={`w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-medium px-8 py-3 rounded-full transition-all duration-300 ${hasSent || loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:opacity-90 hover:scale-[1.02] active:scale-95"}`}
             >
-              {loading ? "Sending..." : "Send Message"}
+              {hasSent ? "Message Sent ✓" : loading ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>
