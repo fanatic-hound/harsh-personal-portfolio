@@ -52,6 +52,11 @@ const Contact: React.FC<ContactProps> = () => {
       return toast.error("Please complete the form above");
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return toast.error("Please enter a valid email address");
+    }
+
     if (hasSent) {
       return toast.error("You can only send one message per day. Please try again tomorrow!");
     }
