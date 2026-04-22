@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { Playpen_Sans, Playfair_Display } from "next/font/google";
-import emailjs from "@emailjs/browser";
 import "react-toastify/dist/ReactToastify.css";
 import ThemeContext from "../context/ThemeContext";
 import Headers from "./Headers";
@@ -63,33 +62,28 @@ const Contact: React.FC<ContactProps> = () => {
 
     setLoading(true);
 
-    const data = {
-      name,
-      email,
-      subject,
-      message,
-    };
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
 
-    emailjs
-      .send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        data,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_API!
-      )
-      .then(
-        () => {
-          setLoading(false);
-          setHasSent(true);
-          localStorage.setItem("contact_msg_sent", String(Date.now()));
-          toast.success(`Successfully sent email.`);
-        },
-        (error) => {
-          setLoading(false);
-          console.error(error);
-          toast.error(error.text);
-        }
-      );
+      const result = await response.json();
+
+      if (response.ok) {
+        setHasSent(true);
+        localStorage.setItem("contact_msg_sent", String(Date.now()));
+        toast.success("Successfully sent email.");
+      } else {
+        toast.error(result.error || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
