@@ -169,7 +169,7 @@ const Contact: React.FC<ContactProps> = () => {
         {/* Social icons */}
         <div className="flex justify-center gap-4 sm:gap-5 mt-10 sm:mt-12">
           {[
-            { href: `mailto:${gmail}`, icon: <SiGmail size={20} />, label: "Email" },
+            { href: gmail, icon: <SiGmail size={20} />, label: "Email" },
             { href: instagram, icon: <FaInstagram size={20} />, label: "Instagram" },
             { href: linkedin, icon: <FaLinkedin size={20} />, label: "LinkedIn" },
             { href: leetcode, icon: <SiLeetcode size={20} />, label: "LeetCode" },

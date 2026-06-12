@@ -46,7 +46,7 @@ const About = () => {
                     &gt; Connect with me!
                   </span>
                   <div className="flex gap-3">
-                    <a href={`mailto:${gmail}`} target="_blank" rel="noopener noreferrer" aria-label="Email" className="pixel-lift flex items-center justify-center w-10 h-10 bg-pixel-yellow text-[#111014] border-2 border-ink shadow-hard-sm">
+                    <a href={gmail} target="_blank" rel="noopener noreferrer" aria-label="Email" className="pixel-lift flex items-center justify-center w-10 h-10 bg-pixel-yellow text-[#111014] border-2 border-ink shadow-hard-sm">
                       <SiGmail size={18} />
                     </a>
                     <a href={instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="pixel-lift flex items-center justify-center w-10 h-10 bg-pixel-pink text-white border-2 border-ink shadow-hard-sm">
