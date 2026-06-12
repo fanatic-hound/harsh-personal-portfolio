@@ -1,55 +1,112 @@
-Harsh Pal
-+ Bengaluru, India # theharshpal2306@gmail.com  +91 8368802064  Portfolio ð Harsh Pal
-Education
-Indian Institute of Technology, Roorkee
-Bachelor of Technology — CGPA: 8.19
-Nov 2020 – July 2024
-Experience
-Associate Software Engineer
-WiseTech Global Pvt. Ltd.
-Bengaluru, Karnataka
-July 2024 – Present
-◦ Optimized AWS cloud SSM API calls reducing by 60% via caching/batch retrieval, minimizing attack surface & costs.
-◦ Refactored monolithic service layers into modular APIs, leveraging multi-threading to parallelize complex calculation
-logic while maintaining SOLID-based maintainability and secure least-privilege patterns.
-◦ Developed enterprise-grade APIs featuring non-blocking I/O and asynchronous processing, optimizing the handling
-of high-concurrency workloads and ensuring reliable data delivery through robust, multi-threaded error-handling mechanisms.
-◦ Strengthened system security and resilience by implementing a robust exception handling framework for critical errors
-reducing downtime by 40%.
-◦ Implemented security change extenders to block backend modifications when entities are marked as closed, enforcing data
-integrity and strengthening access control in critical workflows.
-◦ Optimized database queries and API handling, reducing latency and increasing throughput for high-volume transactions.
-◦ Led the extraction of a production-critical service from a monorepo into a standalone repository while preserving full Git
-commit history, enabling independent CI/CD pipelines and zero-downtime production cutover.
-◦ Led cross-functional design and code reviews, improving architecture, testability, efficiency, and enforcing coding standards.
-◦ Conducted security-aware debugging of production issues through log analysis, metric monitoring, and anomaly detection,
-identifying potential security incidents and implementing root cause fixes to improve system stability.
-◦ Automated CI/CD code quality checks with Bash, pylint, mypy, and isort to ensure consistent quality across teams.
-Research Intern
-University of Victoria
-Victoria, BC, Canada
-May 2023 – Aug 2023
-◦ Did research & publication focused on micromechanical modeling of thermal conductivity in wood composites.
-◦ Developed thermal conductivity equations for diverse cross-laminated timber panels, for different scenarios.
+﻿Mobile: +91-8368802064                Linkedin: https://www.linkedin.com/harrsshh                Email: theharshpal2306@gmail.com                 Portfolio: harsh-pal.vercel.app                 Github: https://www.github.com/fanatic-hound
+	
+
+Results-oriented Software Engineer specializing in scalable back-end systems, distributed architectures, and enterprise application development, with practical experience in AI-powered multi-agent ecosystems. Aiming to contribute as a Back-end or Full Stack Engineer by delivering robust, secure and high-performing software solutions through expertise in micro-services, cloud platforms, API development, Large Language Models (LLMs), and agentic AI technologies.
+
+
+Profile Summary
+  
+
+* Skilled in building RESTful APIs, micro-services, and distributed systems that support high-performance and business-critical applications.
+* Hands-on experience in developing enterprise-grade solutions with a strong focus on scalability, reliability, security, and maintainability.
+* Proficient in object-oriented programming, data structures, algorithms, concurrency, and multi-threaded application development.
+* Experience of working with relational databases, query optimization & performance tuning to improve application efficiency & response times.
+* Familiar with cloud-native development practices, containerization, CI/CD pipelines & DevOps methodologies.
+* Knowledge of event-driven architectures and modern back-end technologies including Kafka, RabbitMQ, Docker, and Kubernetes.
+* Strong problem-solving & analytical skills with experience in debugging production issues, conducting root cause analysis, and implementing robust solutions.
+* Effective collaborator with experience participating in cross-functional teams, code reviews, system design discussions, and Agile software development environments.
+	
+
+Core Competencies
+  
+
+Back-end Engineering & Application Development
+	Scalability Engineering & Performance Optimization
+	Application Security & Reliability Engineering
+	API Design & Micro-services Architecture
+	High-Concurrency & Asynchronous Processing
+	CI/CD Automation & DevOps Collaboration
+	System Design & Distributed Systems
+	Database Optimization & Data Integrity Management
+	Production Support, Incident Management & Root Cause Analysis
+	
+
+
+
+Technical Skills  
+
+
+* Languages: C++, C#, Java, Python
+* Technologies: .NET, Unity, Next.js, React.js, Node.js, Spring Boot, LLM Tool Calling
+* Concepts: Low-Level Design, High-Level Design, Concurrency & Multi-threading, Data Structures & Algorithms, OOP, Databases
+* Tools & Platforms: Git, CI/CD, PostgreSQL, Docker, Agentic AI Workflows, Kafka, Kubernetes, RabbitMQ
+Work Experience
+  
+
+Software Engineer 
+WiseTech Global Pvt. Ltd., Bengaluru                                                                                                                                                                                 Jul’24 – Present
+Highlights:
+* Engineered a multi-agent AI orchestration platform leveraging iterative agent-debate workflow, automated developer operations and reduced manual effort by 80%.
+* Optimized AWS cloud SSM API calls reducing by 60% via caching/batch retrieval, minimizing attack surface & costs. 
+* Modernized legacy monolithic components into scalable, modular APIs, utilized multi-threading to accelerate complex computations reducing processing time by 35% while adhering to SOLID principles and secure design practices.
+* Developed high-performance enterprise APIs with asynchronous processing and non-blocking I/O, enabled efficient management of high-concurrency workloads and reliable data delivery reducing response latency by 40%.
+* Enhanced platform reliability by implementing a comprehensive exception-management framework, reduced critical system downtime by 40%.
+* Strengthened data governance by introducing back-end validation controls that prevent modifications to closed entities, improved data integrity and reduced unauthorized changes by 60%.
+* Optimized database operations & API execution paths, reduced p95 latency by 30% and improved throughput by 20% for large-scale transaction processing.
+* Spearheaded the migration of a business-critical service from a monolithic repository to an independent codebase while preserving Git history, enabled autonomous CI/CD pipelines and seamless 100% zero-downtime deployment.
+* Facilitated architecture discussions, design reviews & code quality initiatives to improve maintainability, scalability & engineering best practices, improving test coverage by 20% and reducing post-merge defects by 30%.
+* Investigated and resolved production incidents through log analysis, performance monitoring and anomaly detection and implemented root-cause fixes to improve operational stability reducing mean time to resolve by 35%.
+* Automated CI/CD quality gates using Bash, pylint, mypy, and isort, ensured 100% coding consistency across development teams.
+
+
+
+
+
+
+
+
+
+
 Projects
-Curio.Ai - AI Powered Personalized Learning Platform 2 | Java, Spring Boot, REST APIs, AI/ML
-◦ Developed an AI-driven backend platform to deliver personalized learning paths by analyzing user data & learning patterns.
-◦ Designed scalable REST APIs with modular architecture to support adaptive content recommendations and future system
-integrations.
-AR Based Game 2 | C#, Unity Game Engine, Visual Studio
-◦ Developed a 3D FPS Mobile Game in Unity, incorporating AR technology for enhanced player immersion.
-◦ Utilized AR Foundation to seamlessly integrate virtual enemies into real-world environments through the device camera.
-AI Enabled Blogging Platform 2 | TypeScript, Node.js, Next.js, Jest
-◦ Built a production-ready blogging platform with secure auth, full blog creation & management and responsive UI.
-◦ Implemented comprehensive unit tests for core workflows using modern testing libraries to ensure reliability & maintainability.
-Technical Skills
-Languages: C++, C#, Java, Python
-Technologies: .NET, Unity, Next.js, React.js, Node.js, Spring Boot
-Concepts: Low-Level Design, Concurrency & Multi-threading, Data Structures & Algorithms, OOP, Databases
-Tools & Platforms: Git, CI/CD, PostgreSQL, NUnit, Moq, Bash
-Soft Skills: Communication, Team collaboration, Problem-solving, Adaptability, Time-management.
-Achievements
-◦ Won Professional Development & Innovation Award – IIT Roorkee Convocation 2024
-◦ Globalink Research Fellow – 12-week fully-funded research program in Canada
-◦ Specialist on Codeforces 2 & Knight on LeetCode 2; solved 1,000+ problems across major competitive programming platforms.
-Harsh Pal - Page 1 of 1
+  
+
+Curio.AI – AI-Powered Personalized Learning Platform | Link
+Tech Stack: Java | Spring Boot | REST APIs | AI/ML
+* Developed an AI-enabled learning platform that generates personalized learning pathways by analyzing user behavior, preferences & learning patterns.
+* Architected scalable back-end services and RESTful APIs using a modular design approach, enabling adaptive content recommendations and seamless future integrations.
+* Designed system components to support personalized content delivery, user progress tracking & intelligent recommendation workflow.
+
+
+AR-Based First-Person Shooter (FPS) Game | Link
+Tech Stack: C# | Unity | AR Foundation | Visual Studio
+* Developed an immersive 3D FPS mobile game using Unity, integrated Augmented Reality (AR) capabilities to enhance user engagement and gameplay experience.
+* Leveraged AR Foundation to blend virtual game elements with real-world environments through device-camera tracking and spatial mapping.
+* Implemented interactive gameplay mechanics, enemy AI behaviors, and real-time object rendering for a seamless AR gaming experience.
+AI-Enabled Blogging Platform | Link
+Tech Stack: TypeScript | Node.js | Next.js | Jest
+* Built a full-stack blogging platform featuring secure authentication, content management, blog publishing workflow & a responsive user interface.
+* Developed scalable back-end services and intuitive front-end experiences to support content creation, editing, and administration.
+* Implemented comprehensive unit and integration testing using Jest, improving application reliability, maintainability, and code quality.
+* Incorporated modern software engineering practices, including modular architecture, reusable components, and secure user management.
+
+
+Internship
+  
+
+Research Intern
+University of Victoria | Victoria, British Columbia, Canada                                                                                                                                     May’23 – Aug’23
+* Conducted research on micromechanical modeling and prediction of thermal conductivity in advanced wood composite materials.
+* Developed analytical thermal conductivity models for various cross-laminated timber configurations under multiple structural & environmental conditions.
+* Contributed to research publication activities through data analysis, model validation, and technical documentation.
+Education
+  
+
+
+
+2024: B.Tech. in Mechanical Engineering | Indian Institute of Technology (IIT) Roorkee, secured CGPA: 8.19/10
+Personal Details
+  
+
+* Date of Birth: 23rd June 2002
+* Languages Known: English, Hindi, & Elementary Spanish
+* Address: Bengaluru, 560037.
