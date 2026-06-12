@@ -26,7 +26,7 @@ export default function Home(): JSX.Element {
     <div className="w-full overflow-x-hidden">
       <Head>
         <link rel="icon" href="/favicon.png" />
-        <title>Harsh Pal&apos;s Portfolio</title>
+        <title>Harsh Pal</title>
       </Head>
       {/* Landing Page */}
       {isLandingVisible && <Landing setIsLandingVisible={setIsLandingVisible} />}

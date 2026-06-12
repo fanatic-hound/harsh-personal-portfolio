@@ -121,7 +121,6 @@ export async function POST(req: NextRequest) {
     const { messages } = await req.json();
 
     const apiKey = process.env.OPENROUTER_API_KEY;
-    const model = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free";
 
     if (!apiKey) {
       return NextResponse.json(
@@ -130,39 +129,56 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Free-tier models get rate-limited upstream fairly often. Try a few
+    // models from different providers before giving up.
+    const models = [
+      process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free",
+      "nvidia/nemotron-nano-9b-v2:free",
+      "google/gemma-4-26b-a4b-it:free",
+    ];
+
     const resumeText = await getResumeText();
     const systemPrompt = buildSystemPrompt(resumeText);
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages,
-        ],
-        max_tokens: 512,
-        temperature: 0.7,
-      }),
-    });
+    let lastStatus = 502;
+    let lastErrBody = "";
 
-    if (!response.ok) {
-      const errBody = await response.text();
-      console.error("OpenRouter error:", response.status, errBody);
-      return NextResponse.json(
-        { error: `AI error: ${response.status} - ${errBody}` },
-        { status: 502 }
-      );
+    for (const model of models) {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: systemPrompt },
+            ...messages,
+          ],
+          max_tokens: 512,
+          temperature: 0.7,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't generate a response.";
+        return NextResponse.json({ reply });
+      }
+
+      lastStatus = response.status;
+      lastErrBody = await response.text();
+      console.error(`OpenRouter error (model: ${model}):`, lastStatus, lastErrBody);
+
+      // Only fall through to the next model on rate-limit/unavailable errors.
+      if (lastStatus !== 429 && lastStatus !== 404) break;
     }
 
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't generate a response.";
-
-    return NextResponse.json({ reply });
+    return NextResponse.json(
+      { error: `AI error: ${lastStatus} - ${lastErrBody}` },
+      { status: 502 }
+    );
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(
