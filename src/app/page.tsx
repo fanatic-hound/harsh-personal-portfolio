@@ -35,7 +35,7 @@ export default function Home(): JSX.Element {
 
       {/* Main Content */}
       {!isLandingVisible && (
-        <main className="p-2 sm:p-4 ml-0 lg:ml-[100px] transition-all">
+        <main className="p-2 sm:p-4 ml-0 lg:ml-[88px] transition-all">
           <div className="sections-container">
             {sections.map((section, index) => (
               <div key={index} id={section.id} className="section">

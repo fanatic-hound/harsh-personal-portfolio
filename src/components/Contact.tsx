@@ -1,22 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { Playpen_Sans, Playfair_Display } from "next/font/google";
+import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import ThemeContext from "../context/ThemeContext";
 import Headers from "./Headers";
+import Marquee from "./Marquee";
+import ChibiAvatar from "./ChibiAvatar";
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiLeetcode, SiGmail } from "react-icons/si";
 import { instagram, github, linkedin, leetcode, gmail } from "../../public/Links";
-
-const playpenSans = Playpen_Sans({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400'],
-});
 
 interface ContactProps {
   theme?: string;
@@ -30,12 +22,8 @@ const Contact: React.FC<ContactProps> = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [hasSent, setHasSent] = useState<boolean>(false);
-  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setFadeIn(true);
-    }, 250);
     const lastSent = localStorage.getItem("contact_msg_sent");
     if (lastSent && Date.now() - Number(lastSent) < 24 * 60 * 60 * 1000) {
       setHasSent(true);
@@ -87,86 +75,123 @@ const Contact: React.FC<ContactProps> = () => {
   };
 
   return (
-    <section id="contacts" className={`relative ${fadeIn ? "fadeIn" : ""} px-4 sm:px-8 py-8 sm:py-12`}>
-      <Headers text="Get in Touch" />
+    <section id="contacts" className="relative px-0 py-8 sm:py-12">
+      {/* Pink marquee strip ahead of the contact block, pixel.melbourne style */}
+      <div className="mb-12">
+        <Marquee items={["Let's Talk", "Say Hello", "Get In Touch", "Let's Build Something"]} variant="pink" />
+      </div>
 
-      <div className={`${playpenSans.className} max-w-3xl mx-auto mt-8 sm:mt-12 animate-fadeIn`}>
-        {/* Intro text - centered */}
-        <div className="text-center mb-8 sm:mb-10">
-          <h3 className="text-xl sm:text-2xl md:text-3xl mb-3 font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-            Let&apos;s talk about everything!
-          </h3>
-          <p className="text-sm sm:text-base md:text-lg text-gray-400">
-            Don&apos;t like forms? Send me an email. 👋
-          </p>
-        </div>
+      <div className="px-4 sm:px-8">
+        <Headers text="Get in Touch" />
 
-        {/* Form card */}
-        <div className="custom-shadow bg-[color:var(--container-color)] rounded-2xl p-5 sm:p-8 md:p-10">
-          <form onSubmit={submitHandler} className="space-y-4 sm:space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                placeholder="Your name"
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="email"
-                className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                placeholder="Your email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="max-w-3xl mx-auto mt-8 sm:mt-12"
+        >
+          {/* Intro text - centered */}
+          <div className="text-center mb-8 sm:mb-10">
+            <div className="flex justify-center mb-4">
+              <ChibiAvatar emote="peace" size={130} className="chibi-float" />
             </div>
+            <h3 className="font-pixel text-base sm:text-xl md:text-2xl mb-4 uppercase leading-relaxed [text-shadow:3px_3px_0_var(--pixel-yellow)]">
+              Let&apos;s talk about everything!
+            </h3>
+            <p className="font-terminal text-lg sm:text-xl text-muted uppercase tracking-wide">
+              &gt; Don&apos;t like forms? Send me an email.
+            </p>
+          </div>
 
-            <input
-              type="text"
-              className="w-full h-12 sm:h-14 bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl px-4 text-sm sm:text-base transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-              placeholder="Subject"
-              onChange={(e) => setSubject(e.target.value)}
-            />
+          {/* Form card */}
+          <div className="pixel-card p-5 sm:p-8 md:p-10">
+            <form onSubmit={submitHandler} className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="contact-name" className="pixel-label">Name *</label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    autoComplete="name"
+                    className="pixel-input"
+                    placeholder="Your name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-email" className="pixel-label">Email *</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    autoComplete="email"
+                    className="pixel-input"
+                    placeholder="you@example.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
 
-            <textarea
-              rows={5}
-              className="w-full bg-[color:var(--hover-tech-item)] border border-gray-700 outline-none rounded-xl p-4 text-sm sm:text-base resize-none transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-              placeholder="Write your message..."
-              onChange={(e) => setMessage(e.target.value)}
-            ></textarea>
+              <div>
+                <label htmlFor="contact-subject" className="pixel-label">Subject *</label>
+                <input
+                  id="contact-subject"
+                  type="text"
+                  className="pixel-input"
+                  placeholder="What's this about?"
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={hasSent || loading}
-              className={`w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm sm:text-base font-medium px-8 py-3 rounded-full transition-all duration-300 ${hasSent || loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:opacity-90 hover:scale-[1.02] active:scale-95"}`}
+              <div>
+                <label htmlFor="contact-message" className="pixel-label">Message *</label>
+                <textarea
+                  id="contact-message"
+                  rows={5}
+                  className="pixel-input resize-none"
+                  placeholder="Write your message..."
+                  onChange={(e) => setMessage(e.target.value)}
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={hasSent || loading}
+                className="btn-pixel btn-pixel-pink w-full sm:w-auto"
+              >
+                {hasSent ? "Message Sent ✓" : loading ? "Sending..." : "Send Message"}
+              </button>
+            </form>
+          </div>
+          <ToastContainer position="bottom-right" theme={theme} />
+        </motion.div>
+
+        {/* Social icons */}
+        <div className="flex justify-center gap-4 sm:gap-5 mt-10 sm:mt-12">
+          {[
+            { href: `mailto:${gmail}`, icon: <SiGmail size={20} />, label: "Email" },
+            { href: instagram, icon: <FaInstagram size={20} />, label: "Instagram" },
+            { href: linkedin, icon: <FaLinkedin size={20} />, label: "LinkedIn" },
+            { href: leetcode, icon: <SiLeetcode size={20} />, label: "LeetCode" },
+            { href: github, icon: <FaGithub size={20} />, label: "GitHub" },
+          ].map(({ href, icon, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="pixel-lift flex items-center justify-center w-11 h-11 bg-surface border-2 border-ink shadow-hard-sm hover:bg-pixel-yellow hover:text-[#111014]"
             >
-              {hasSent ? "Message Sent ✓" : loading ? "Sending..." : "Send Message"}
-            </button>
-          </form>
+              {icon}
+            </a>
+          ))}
         </div>
-        <ToastContainer position="bottom-right" theme={theme} />
-      </div>
 
-      {/* Social icons */}
-      <div className="flex justify-center gap-5 sm:gap-6 mt-10 sm:mt-12">
-        <a href={`mailto:${gmail}`} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
-          <SiGmail size={22} />
-        </a>
-        <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
-          <FaInstagram size={22} />
-        </a>
-        <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
-          <FaLinkedin size={22} />
-        </a>
-        <a href={leetcode} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
-          <SiLeetcode size={22} />
-        </a>
-        <a href={github} target="_blank" rel="noopener noreferrer" className="text-current transition-all duration-300 ease-in-out hover:scale-125 hover:text-purple-400">
-          <FaGithub size={22} />
-        </a>
+        <footer className="font-terminal text-center mt-10 pb-4 text-muted text-lg uppercase tracking-widest">
+          Made with ❤️ by Harsh Pal
+        </footer>
       </div>
-
-      <footer className={`${playfairDisplay.className} text-center mt-8 sm:mt-10 pb-4 text-gray-500 text-sm`}>
-        Made with ❤️ by Harsh Pal
-      </footer>
     </section>
   );
 };

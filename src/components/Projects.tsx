@@ -1,22 +1,11 @@
+"use client";
 import React, { useState } from "react";
 import Headers from "./Headers";
-import { Anonymous_Pro, Playpen_Sans, Josefin_Slab } from "next/font/google";
+import { motion, AnimatePresence } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
+import ChibiAvatar from "./ChibiAvatar";
 
-const anonymousPro = Anonymous_Pro({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const playpenSans = Playpen_Sans({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const josefinSlab = Josefin_Slab({
-  subsets: ["latin"],
-  weight: ["600"],
-});
+const TAG_COLORS = ["tag-yellow", "tag-pink", "tag-lime", "tag-sky"];
 
 const projects = [
   {
@@ -102,87 +91,103 @@ interface Project {
   deployedUrl?: string;
 }
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   return (
-    <div className="project-card">
-      <h3 className={`${josefinSlab.className}`}>{project.title}</h3>
-      <p className={`${playpenSans.className}`}>{project.description}</p>
-      <div className="flex items-center justify-between gap-2 mt-2">
-        <div className={` ${anonymousPro.className} tech-stack`}>
-          {project.techStack.map((tech, index) => (
-            <span key={index} className="tech-item">
-              {tech}
-            </span>
-          ))}
-        </div>
-        {(project.repoUrl || project.deployedUrl) && (
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {project.repoUrl && (
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--title-color)] hover:text-purple-500 transition-colors"
-                title="Source Code"
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      transition={{ duration: 0.25, delay: index * 0.05, ease: "easeOut" }}
+      className="h-full"
+    >
+      <div className="pixel-card pixel-lift p-5 sm:p-6 h-full flex flex-col">
+        <h3 className="font-pixel text-xs sm:text-sm leading-relaxed uppercase mb-3">{project.title}</h3>
+        <p className="font-body text-sm sm:text-[0.95rem] text-muted mb-4 flex-1 leading-relaxed">{project.description}</p>
+        <div className="flex items-end justify-between gap-2 mt-auto">
+          <div className="flex flex-wrap gap-2">
+            {project.techStack.map((tech, i) => (
+              <span
+                key={i}
+                className={`pixel-tag ${TAG_COLORS[i % TAG_COLORS.length]} !text-[0.75rem] !px-1.5 !py-0.5`}
               >
-                <FiGithub size={18} />
-              </a>
-            )}
-            {project.deployedUrl && (
-              <a
-                href={project.deployedUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--title-color)] hover:text-pink-500 transition-colors"
-                title="Live Demo"
-              >
-                <FiExternalLink size={18} />
-              </a>
-            )}
+                {tech}
+              </span>
+            ))}
           </div>
-        )}
+          {(project.repoUrl || project.deployedUrl) && (
+            <div className="flex items-center gap-3 flex-shrink-0">
+              {project.repoUrl && (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-hover"
+                  title="Source Code"
+                  aria-label={`${project.title} source code`}
+                >
+                  <FiGithub size={18} />
+                </a>
+              )}
+              {project.deployedUrl && (
+                <a
+                  href={project.deployedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-hover"
+                  title="Live Demo"
+                  aria-label={`${project.title} live demo`}
+                >
+                  <FiExternalLink size={18} />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("Software");
+  const categories = ["Software", "Mechanical"];
 
   return (
-    <section id="projects" className="min-h-screen relative overflow-y-auto">
-    {/* <Card> */}
-    <section style={{ padding: '2rem' }} className="projects-section">
+    <section id="projects" className="min-h-screen relative overflow-y-auto p-4 sm:p-8 md:p-12 lg:p-16">
       <Headers text="Projects" />
-      
-      {/* Navigator */}
-      <div className={` ${playpenSans.className} projects-navigator`}>
-        <button
-          className={selectedCategory === "Software" ? "active" : ""}
-          onClick={() => setSelectedCategory("Software")}
-        >
-          Software
-        </button>
-        <button
-          className={selectedCategory === "Mechanical" ? "active" : ""}
-          onClick={() => setSelectedCategory("Mechanical")}
-        >
-          Mechanical
-        </button>
+
+      {/* Arcade category selector */}
+      <div className="flex justify-center items-center gap-4 sm:gap-6 my-8 sm:my-10">
+        <ChibiAvatar emote="excited" size={90} className="chibi-float hidden sm:block" />
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => setSelectedCategory(category)}
+            aria-pressed={selectedCategory === category}
+            className={`btn-pixel text-base sm:text-lg ${
+              selectedCategory === category ? "btn-pixel-pink" : "btn-pixel-paper"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
       </div>
-      
+
       {/* Project Display */}
-      <div className="projects">
-        <div className="project-grid">
-          {projects
-            .filter((project) => project.category === selectedCategory)
-            .map((project, index) => (
-              <ProjectCard key={index} project={project} />
-            ))}
-        </div>
+      <div className="flex justify-center w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedCategory}
+            className="grid w-full max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          >
+            {projects
+              .filter((project) => project.category === selectedCategory)
+              .map((project, index) => (
+                <ProjectCard key={project.title} project={project} index={index} />
+              ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </section>
-    {/* </Card> */}
     </section>
   );
 };

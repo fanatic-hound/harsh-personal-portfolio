@@ -1,91 +1,93 @@
 "use client";
-import { useRef, useState, useEffect, useContext } from "react";
-import ThemeContext from '../context/ThemeContext'; // Ensure this is the correct path
-import { motion, AnimatePresence } from 'framer-motion';
-import {Roboto} from "next/font/google";
-import ThemeToggleButton from './ThemeToggleButton'; // Ensure this is the correct path
+import { useState, useEffect, useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const languages = [
-  'Hello! 👋🏻', // English
-  'Hola!!', // Spanish
-  'Bonjour!', // French
-  'Hallo!', // German
-  'नमस्ते |🙏🏻', // Hindi
-  'こんにちは', // Japanese
-  '안녕하세요', // Korean
-  'Привет', // Russian
-  'Ciao!', // Italian
-  'Olá!', // Portuguese
+  "Hello!",
+  "Hola!!",
+  "Bonjour!",
+  "Hallo!",
+  "नमस्ते",
+  "こんにちは",
+  "안녕하세요",
+  "Привет",
+  "Ciao!",
+  "Olá!",
 ];
 
-const robot = Roboto({
-  subsets: ["latin"],
-  weight: ["400"],
-});
+const TOTAL_BLOCKS = 10;
 
 export default function Landing({ setIsLandingVisible }: { setIsLandingVisible: (a: boolean) => void }) {
   const [index, setIndex] = useState(0);
-  const [isFinished, setIsFinished] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const { theme, toggleTheme } = useContext(ThemeContext); // Access the theme and toggleTheme from the context
+  const [isExiting, setIsExiting] = useState(false);
+  const { toggleTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (index < languages.length - 1) {
-      const interval = setInterval(() => {
-        setIndex((prevIndex) => prevIndex + 1);
-      }, 350); // Change language every 0.3 seconds
-
-      return () => clearInterval(interval);
+      const timeout = setTimeout(() => setIndex((prev) => prev + 1), 260);
+      return () => clearTimeout(timeout);
     } else {
-      setIsFinished(true); // Set finished when last index is reached
+      const timeout = setTimeout(() => setIsExiting(true), 600);
+      return () => clearTimeout(timeout);
     }
   }, [index]);
 
-  useEffect(() => {
-    if (isFinished) {
-      const timeout = setTimeout(() => {
-        setIsLandingVisible(false); // Hide the landing page after the curtain animation
-      }, 1000); // Duration of the curtain animation
-
-      return () => clearTimeout(timeout);
-    }
-  }, [isFinished, setIsLandingVisible]);
+  const filled = Math.round(((index + 1) / languages.length) * TOTAL_BLOCKS);
 
   return (
-    <div
-      ref={ref}
-      className={`custom-landing-page landing-page ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}
-    >
-      <div className="custom-landing-page landing-container">
-        <div className="custom-landing-page navbar-button-container">
-          <ThemeToggleButton toggleTheme={toggleTheme} />
-        </div>
+    <AnimatePresence onExitComplete={() => setIsLandingVisible(false)}>
+      {!isExiting && (
+        <motion.div
+          key="landing"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, ease: "linear" }}
+          className="pixel-grid-bg fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-paper"
+        >
+          {/* Corner pixel decorations */}
+          <div className="absolute top-6 left-6 flex gap-2">
+            <span className="w-4 h-4 bg-pixel-pink border-2 border-ink" />
+            <span className="w-4 h-4 bg-pixel-yellow border-2 border-ink" />
+            <span className="w-4 h-4 bg-pixel-lime border-2 border-ink" />
+          </div>
 
-        <div className={`${robot.className} landing-container`}>
-          {!isFinished ? (
+          <div className="absolute top-6 right-6 z-10">
+            <ThemeToggleButton toggleTheme={toggleTheme} />
+          </div>
+
+          <div className="flex flex-col items-center gap-8 px-4">
+            {/* Cycling greeting — instant pixel swap, no easing */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
-                initial={{ rotateX: 90, opacity: 0 }}
-                animate={{ rotateX: 0, opacity: 1 }}
-                exit={{ rotateX: -90, opacity: 0 }}
-                transition={{ duration: 0.15, ease: 'easeInOut' }}
-                className="hello-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.08, ease: "linear" }}
+                className="font-pixel text-3xl sm:text-5xl md:text-6xl text-center leading-relaxed [text-shadow:4px_4px_0_var(--pixel-pink)]"
               >
                 {languages[index]}
               </motion.div>
             </AnimatePresence>
-          ) : (
-            <motion.div
-              className="curtain"
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 0 }}
-              transition={{ duration: 0, ease: 'easeInOut' }}
-              onAnimationComplete={() => setIsLandingVisible(false)}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+
+            {/* Pixel loading bar */}
+            <div className="pixel-card-flat flex gap-1 p-2" role="progressbar" aria-valuenow={filled} aria-valuemin={0} aria-valuemax={TOTAL_BLOCKS} aria-label="Loading">
+              {Array.from({ length: TOTAL_BLOCKS }).map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-4 h-6 sm:w-6 sm:h-8 ${i < filled ? "bg-pixel-pink" : "bg-transparent"}`}
+                />
+              ))}
+            </div>
+
+            <div className="font-terminal text-xl sm:text-2xl uppercase tracking-widest text-muted">
+              Loading portfolio...
+              <span className="blink-cursor h-[1em]" />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

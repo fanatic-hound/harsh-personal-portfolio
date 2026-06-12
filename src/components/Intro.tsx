@@ -1,60 +1,36 @@
+"use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { scroller } from "react-scroll";
-import { Courgette, Josefin_Slab, Anonymous_Pro, Playpen_Sans } from "next/font/google";
-import ThemeContext from '../context/ThemeContext'; // Import ThemeContext
-import Image from "next/image";
-import Card from "./Card";
-import { renderCanvas } from "./renderCanvas";
-import styles from "./Intro.module.css";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import Marquee from "./Marquee";
+import ChibiAvatar from "./ChibiAvatar";
 
-const courgette = Courgette({
-  subsets: ["latin"],
-  weight: ["400"],
-});
+const ParticleField = dynamic(() => import("./ParticleField"), { ssr: false });
 
-const londrinaSketch = Josefin_Slab({
-  subsets: ["latin"],
-  weight: ["600"],
-});
+const phrases = [
+  "Self taught Software Engineer",
+  "School taught Mechanical Engineer",
+];
 
-const anonymousPro = Anonymous_Pro({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const playwriteGBS = Playpen_Sans({
-  subsets: ["latin"],
-  weight: ["400"],
-});
+const marqueeItems = [
+  "Software Engineer",
+  "IIT Roorkee",
+  "Competitive Programmer",
+  "Problem Solver",
+  "Open To Work",
+];
 
 export default function Intro() {
-  const [fadeIn, setFadeIn] = useState(false);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-  const { theme } = useContext(ThemeContext); // Access the current theme
-
-  const phrases = [
-    { text: "Self taught Software Engineer 👨‍💻", font: `${anonymousPro.className}` },
-    { text: "School taught Mechanical Engineer 🧑‍🔧", font: `${londrinaSketch.className}` },
-  ];
+  const [typingSpeed, setTypingSpeed] = useState(120);
 
   useEffect(() => {
-    setTimeout(() => {
-      setFadeIn(true);
-    }, 250);
-  }, []);
-
-  useEffect(() => {
-    renderCanvas();
-  }, []);
-
-  useEffect(() => {
-    let typingTimeout: NodeJS.Timeout;
     const handleTyping = () => {
-      const currentPhrase = phrases[loopNum % phrases.length].text;
+      const currentPhrase = phrases[loopNum % phrases.length];
       const updatedText = isDeleting
         ? currentPhrase.substring(0, text.length - 1)
         : currentPhrase.substring(0, text.length + 1);
@@ -62,65 +38,88 @@ export default function Intro() {
       setText(updatedText);
 
       if (!isDeleting && updatedText === currentPhrase) {
-        setTimeout(() => setIsDeleting(true), 1000);
+        setTimeout(() => setIsDeleting(true), 1200);
       } else if (isDeleting && updatedText === "") {
         setIsDeleting(false);
         setLoopNum(loopNum + 1);
       }
 
-      setTypingSpeed(isDeleting ? 50 : 150);
+      setTypingSpeed(isDeleting ? 40 : 120);
     };
 
-    // eslint-disable-next-line prefer-const
-    typingTimeout = setTimeout(handleTyping, typingSpeed);
+    const typingTimeout = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(typingTimeout);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
+  const router = useRouter();
+
   const handleScrollToContact = () => {
-    router.push('/#contacts');
-    scroller.scrollTo('contacts', {
+    router.push("/#contacts");
+    scroller.scrollTo("contacts", {
       duration: 500,
       delay: 0,
-      smooth: 'easeInOutQuart',
-      offset: -80, // Adjust the offset as needed
+      smooth: "easeInOutQuart",
+      offset: -80,
     });
   };
 
-  const router = useRouter();
-  
+  // Full-bleed: cancel <main>'s padding so the hero spans the whole viewport
   return (
-    <Card>
-    <div id = "intro" className={`${styles.introContainer} ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
-      <div className={styles.introContent}>
-        {/* Image next to your name */}
-        <div className={styles.imageContainer}>
-          <Image
-            src="/images/profile.png" // Adjust path according to your image file
-            alt="Profile Image"
-            width={160} // Adjust the size as needed
-            height={160}
-            className={styles.profileImage}
-          />
-          <div className={`${playwriteGBS.className} ${styles.tooltip} animate-bounce`}>Hello!!</div>
+    <div className="-mt-2 -mx-2 sm:-mt-4 sm:-mx-4 flex flex-col min-h-screen">
+      <div
+        id="intro"
+        className="pixel-grid-bg relative flex-1 flex items-center justify-center px-4 py-12 overflow-hidden"
+      >
+        {/* Drifting pixel squares */}
+        <div className="absolute inset-0 -z-10 opacity-60">
+          <ParticleField />
         </div>
-        <div className={`${playwriteGBS.className} ${styles.greetingText}`}>Hey there I&apos;m,</div>
-        <div className={`${courgette.className} ${styles.introText} ${fadeIn ? "w-full" : "w-0"}`}>
-          <span className={styles.nameText}>Harsh Pal</span>
-        </div>
-        <div className={`${styles.jobTitle} ${phrases[loopNum % phrases.length].font}`}>
-          {text}<span className={styles.cursor}>|</span>
-        </div>
-        <div className={`${playwriteGBS.className} ${styles.introButtonContainer} hover:animate-bounce`}>
-          <button
-            onClick={handleScrollToContact}
-            className={`${styles.introButton} hover-button`}
+
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="relative z-10 flex flex-col items-center text-center"
           >
-            <span className="button-text">FIND ME ON SOCIAL MEDIA</span>
-          </button>
-        </div>
+            {/* Profile image in a pixel frame */}
+            <div className="relative mb-8 group">
+              <div className="pixel-frame pixel-lift relative bg-surface p-2">
+                <ChibiAvatar size={170} emote="wave" className="block chibi-float" />
+                {/* Sticker-style corner pixels */}
+                <span className="absolute -top-2 -left-2 w-4 h-4 bg-pixel-yellow border-2 border-ink" />
+                <span className="absolute -bottom-2 -right-2 w-4 h-4 bg-pixel-pink border-2 border-ink" />
+              </div>
+              <div className="font-terminal absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 pixel-card text-lg whitespace-nowrap opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-150">
+                Hello!! 👋
+              </div>
+            </div>
+
+            <div className="font-terminal text-xl sm:text-2xl text-muted mb-3 uppercase tracking-widest">
+              &gt; Hey there I&apos;m,
+            </div>
+
+            <h1 className="font-pixel text-3xl sm:text-5xl md:text-6xl uppercase leading-relaxed mb-6 [text-shadow:4px_4px_0_var(--pixel-pink),8px_8px_0_var(--pixel-yellow)]">
+              Harsh Pal
+            </h1>
+
+            <div className="status-pill mb-6">
+              <span className="status-dot" />
+              Open to interesting opportunities
+            </div>
+
+            <div className="font-terminal flex items-center justify-center text-xl sm:text-2xl md:text-3xl mb-10 min-h-[2.5rem] uppercase">
+              {text}
+              <span className="blink-cursor h-[1em]" />
+            </div>
+
+            <button onClick={handleScrollToContact} className="btn-pixel btn-pixel-pink">
+              Find me on social media
+            </button>
+        </motion.div>
       </div>
+
+      {/* Marquee strip pinned to the bottom of the hero */}
+      <Marquee items={marqueeItems} />
     </div>
-    <canvas className="bg-skin-base pointer-events-none absolute inset-0" id="canvas" style={{ zIndex: 1 }}></canvas>
-    </Card>
   );
 }

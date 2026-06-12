@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import ThemeContext from '../context/ThemeContext'; // Ensure this is the correct path
+import React from "react";
+import ChibiAvatar from "./ChibiAvatar";
 
 const Logo = () => {
-  const { theme } = useContext(ThemeContext);
-
-  const logoSrc = theme === 'dark' ? '/white_logo.svg' : '/black_logo.svg';
-
-  return <img src={logoSrc} alt="Logo" className="logo-image" />;
+  return (
+    <div className="w-11 h-11 border-2 overflow-hidden flex items-center justify-center">
+      <ChibiAvatar variant="head" size={40} />
+    </div>
+  );
 };
 
 export default Logo;
