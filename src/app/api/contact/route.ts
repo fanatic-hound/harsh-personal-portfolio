@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
   const serviceId = process.env.EMAILJS_SERVICE_ID;
   const templateId = process.env.EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
+  const publicKey = process.env.EMAILJS_PUBLIC_API;
 
   if (!serviceId || !templateId || !publicKey) {
     console.error("EmailJS environment variables are not configured.");
