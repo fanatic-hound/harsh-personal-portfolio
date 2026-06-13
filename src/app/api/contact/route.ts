@@ -55,8 +55,9 @@ export async function POST(request: NextRequest) {
   const serviceId = process.env.EMAILJS_SERVICE_ID;
   const templateId = process.env.EMAILJS_TEMPLATE_ID;
   const publicKey = process.env.EMAILJS_PUBLIC_API;
+  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
 
-  if (!serviceId || !templateId || !publicKey) {
+  if (!serviceId || !templateId || !publicKey || !privateKey) {
     console.error("EmailJS environment variables are not configured.");
     return NextResponse.json({ error: "Server configuration error." }, { status: 500 });
   }
@@ -65,6 +66,7 @@ export async function POST(request: NextRequest) {
     service_id: serviceId,
     template_id: templateId,
     user_id: publicKey,
+    accessToken: privateKey,
     template_params: { name, email, subject, message },
   };
 
