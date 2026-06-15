@@ -10,7 +10,9 @@ import { useRouter } from "next/navigation";
 import { codeforces, iitr, leetcode, uvic, instagram, linkedin, gmail } from "../../public/Links";
 
 const techStack = [
-  "C++", "C#", "Java", "Python", "Data Structures & Algorithms",
+  "C++", "C#", "Java", "Python", "Spring Boot", "REST APIs", "JWT", "OAuth2", "High Level Design", "Redis",
+  "Data Structures & Algorithms", "Low-Level Design", "Databases", "SQL", "NoSQL", "Kafka", "RabbitMQ",
+  "Prometheus", "Docker", "Git", "Kubernetes", "Linux", "System Design", "Operating Systems",
   "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js",
   "Android Studio", "WinForms", "Blazor", "Unity Game Engine",
 ];

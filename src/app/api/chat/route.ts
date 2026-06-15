@@ -1,28 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
-
-// 20 requests per hour per IP, stored persistently in Upstash Redis
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.fixedWindow(20, "1 h"),
-  prefix: "chat_ratelimit",
-});
-
-function getClientIp(request: NextRequest): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-    request.headers.get("x-real-ip") ||
-    "unknown"
-  );
-}
 
 // Cache the resume text so we only read the file once
 let cachedResumeText: string | null = null;
@@ -64,7 +42,7 @@ Education:
 - Research Internship at the University of Victoria, BC, Canada (UVic)
 
 Current Role:
-- Associate Software Engineer at WiseTech Global, India (July 2024 - Present)
+- Software Engineer at WiseTech Global, India (July 2024 - Present)
 
 Professional Summary:
 - Self-taught Software Engineer with a Mechanical Engineering degree from IIT Roorkee
@@ -108,16 +86,6 @@ Guidelines:
 
 export async function POST(req: NextRequest) {
   try {
-    const ip = getClientIp(req);
-    const { success } = await ratelimit.limit(ip);
-
-    if (!success) {
-      return NextResponse.json(
-        { error: "Too many requests. Please try again later." },
-        { status: 429 }
-      );
-    }
-
     const { messages } = await req.json();
 
     const apiKey = process.env.OPENROUTER_API_KEY;
