@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Harsh Pal',
-  description: 'A dynamic portfolio built with Next.js',
+  description: 'Software Engineer experienced in Backend Engineering and Distributed System',
 };
 
 const pressStart = Press_Start_2P({
