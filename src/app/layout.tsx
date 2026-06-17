@@ -1,6 +1,12 @@
 import './globals.css';
 import { Press_Start_2P, VT323, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '../context/ThemeContext';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Harsh Pal',
+  description: 'A dynamic portfolio built with Next.js',
+};
 
 const pressStart = Press_Start_2P({
   subsets: ['latin'],
