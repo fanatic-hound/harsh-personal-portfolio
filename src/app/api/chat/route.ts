@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 
@@ -42,10 +43,21 @@ Education:
 - Research Internship at the University of Victoria, BC, Canada (UVic)
 
 Current Role:
-- Software Engineer at WiseTech Global, India (July 2024 - Present)
+- Member of Technical Staff – II (MTS-2) at Omnissa LLC, Bengaluru (July 2026 - Present)
+- Contributing to Omnissa's flagship Unified Endpoint Management (UEM) platform — an enterprise-grade solution managing millions of endpoints (mobile, desktop, rugged & IoT devices) for Fortune 500 organizations worldwide.
+- Building and enhancing microservices powering device lifecycle management, real-time compliance enforcement & automated policy orchestration across iOS, Android, Windows, macOS & Linux endpoints.
+- Developing high-scale device telemetry ingestion pipelines and event-driven workflows to process millions of device check-ins for real-time visibility and proactive security posture management.
+- Implementing zero-trust security policy engine components, conditional access rules, certificate-based authentication integrations & automated threat-response workflows.
+- Contributing to MDM/MAM/MCM backend services for seamless app deployment, configuration management & secure content distribution at enterprise scale.
+
+Previous Role:
+- Software Engineer at WiseTech Global, India (July 2024 - May 2026)
+- Engineered multi-agent AI orchestration platform, optimized AWS cloud APIs, modernized legacy monoliths into scalable microservices.
 
 Professional Summary:
 - Self-taught Software Engineer with a Mechanical Engineering degree from IIT Roorkee
+- Currently working as MTS-2 at Omnissa, building enterprise-grade UEM platform managing millions of endpoints
+- Previously worked at WiseTech Global as Software Engineer building AI-powered orchestration platforms and enterprise APIs
 - Strong foundation in software development with a focus on problem-solving and clean, production-level code
 - Experience spans both mechanical and software engineering, providing a unique perspective
 - Active competitive programmer on Codeforces (handle: FanaticHound) and Leetcode (handle: FanaticHound)
@@ -88,65 +100,50 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: "OpenRouter API key not configured" },
+        { error: "Gemini API key not configured" },
         { status: 500 }
       );
     }
 
-    // Free-tier models get rate-limited upstream fairly often. Try a few
-    // models from different providers before giving up.
-    const models = [
-      process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free",
-      "nvidia/nemotron-nano-9b-v2:free",
-      "google/gemma-4-26b-a4b-it:free",
-    ];
-
     const resumeText = await getResumeText();
     const systemPrompt = buildSystemPrompt(resumeText);
 
-    let lastStatus = 502;
-    let lastErrBody = "";
+    const modelName = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
-    for (const model of models) {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...messages,
-          ],
-          max_tokens: 512,
-          temperature: 0.7,
-        }),
-      });
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: modelName,
+      systemInstruction: systemPrompt,
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content ?? "Sorry, I couldn't generate a response.";
-        return NextResponse.json({ reply });
-      }
-
-      lastStatus = response.status;
-      lastErrBody = await response.text();
-      console.error(`OpenRouter error (model: ${model}):`, lastStatus, lastErrBody);
-
-      // Only fall through to the next model on rate-limit/unavailable errors.
-      if (lastStatus !== 429 && lastStatus !== 404) break;
-    }
-
-    return NextResponse.json(
-      { error: `AI error: ${lastStatus} - ${lastErrBody}` },
-      { status: 502 }
+    // Convert chat messages from OpenAI format to Gemini format.
+    // Gemini uses "user" and "model" roles (not "assistant").
+    const geminiHistory = messages.slice(0, -1).map(
+      (msg: { role: string; content: string }) => ({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
+      })
     );
+
+    const lastMessage = messages[messages.length - 1];
+
+    const chat = model.startChat({
+      history: geminiHistory,
+      generationConfig: {
+        maxOutputTokens: 512,
+        temperature: 0.7,
+      },
+    });
+
+    const result = await chat.sendMessage(lastMessage.content);
+    const reply =
+      result.response.text() || "Sorry, I couldn't generate a response.";
+
+    return NextResponse.json({ reply });
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(

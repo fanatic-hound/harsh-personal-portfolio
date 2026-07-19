@@ -1,4 +1,4 @@
-﻿Mobile: +91-8368802064                Linkedin: https://www.linkedin.com/harrsshh                Email: theharshpal2306@gmail.com                 Portfolio: harsh-pal.vercel.app                 Github: https://www.github.com/fanatic-hound
+Mobile: +91-8368802064                Linkedin: https://www.linkedin.com/harrsshh                Email: theharshpal2306@gmail.com                 Portfolio: harsh-pal.vercel.app                 Github: https://www.github.com/fanatic-hound
 	
 
 Results-oriented Software Engineer specializing in scalable back-end systems, distributed architectures, and enterprise application development, with practical experience in AI-powered multi-agent ecosystems. Aiming to contribute as a Back-end or Full Stack Engineer by delivering robust, secure and high-performing software solutions through expertise in micro-services, cloud platforms, API development, Large Language Models (LLMs), and agentic AI technologies.
@@ -43,8 +43,18 @@ Technical Skills
 Work Experience
   
 
+Member of Technical Staff – II (MTS-2)
+Omnissa LLC, Bengaluru                                                                                                                                                                               Jul'26 – Present
+Platform: Omnissa Workspace ONE UEM — an industry-leading Unified Endpoint Management platform trusted by Fortune 500 enterprises to manage, secure & orchestrate millions of endpoints across mobile (iOS, Android), desktop (Windows, macOS, Linux), rugged & IoT devices globally.
+Highlights:
+* Contributing to Omnissa's flagship UEM platform, building & enhancing microservices powering device lifecycle management, real-time compliance enforcement & automated policy orchestration across all major OS platforms.
+* Developing high-scale device telemetry ingestion pipelines and event-driven workflows using Kafka to process millions of daily device check-ins, enabling real-time visibility and proactive security posture management for enterprise customers.
+* Implementing zero-trust security policy engine components, including conditional access rules, certificate-based authentication integrations & automated threat-response workflows for enterprise mobility management.
+* Contributing to MDM/MAM/MCM (Mobile Device/Application/Content Management) backend services that enable seamless app deployment, configuration management & secure content distribution at enterprise scale.
+* Working with microservices architecture, containerized deployments (Docker/Kubernetes), and event-driven systems to ensure high availability and scalability of the UEM platform.
+
 Software Engineer 
-WiseTech Global Pvt. Ltd., Bengaluru                                                                                                                                                                                 Jul’24 – Present
+WiseTech Global Pvt. Ltd., Bengaluru                                                                                                                                                                                 Jul'24 – May'26
 Highlights:
 * Engineered a multi-agent AI orchestration platform leveraging iterative agent-debate workflow, automated developer operations and reduced manual effort by 80%.
 * Optimized AWS cloud SSM API calls reducing by 60% via caching/batch retrieval, minimizing attack surface & costs. 
@@ -82,6 +92,7 @@ Tech Stack: C# | Unity | AR Foundation | Visual Studio
 * Developed an immersive 3D FPS mobile game using Unity, integrated Augmented Reality (AR) capabilities to enhance user engagement and gameplay experience.
 * Leveraged AR Foundation to blend virtual game elements with real-world environments through device-camera tracking and spatial mapping.
 * Implemented interactive gameplay mechanics, enemy AI behaviors, and real-time object rendering for a seamless AR gaming experience.
+
 AI-Enabled Blogging Platform | Link
 Tech Stack: TypeScript | Node.js | Next.js | Jest
 * Built a full-stack blogging platform featuring secure authentication, content management, blog publishing workflow & a responsive user interface.

@@ -8,16 +8,18 @@ const github = "https://github.com/fanatic-hound";
 const iitr = "https://www.iitr.ac.in/";
 const uvic = "https://www.uvic.ca/";
 const wisetech = "https://www.wisetechglobal.com/";
+const omnissa = "https://www.omnissa.com/"
 
-export { 
-    resume, 
-    instagram, 
-    linkedin, 
-    codeforces, 
-    leetcode, 
-    gmail, 
+export {
+    resume,
+    instagram,
+    linkedin,
+    codeforces,
+    leetcode,
+    gmail,
     github,
-    iitr, 
-    uvic, 
-    wisetech
+    iitr,
+    uvic,
+    wisetech,
+    omnissa
 };
