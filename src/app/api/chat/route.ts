@@ -122,12 +122,17 @@ export async function POST(req: NextRequest) {
 
     // Convert chat messages from OpenAI format to Gemini format.
     // Gemini uses "user" and "model" roles (not "assistant").
-    const geminiHistory = messages.slice(0, -1).map(
+    // Gemini also requires the first message to be role "user", so we
+    // strip any leading "model" messages (e.g. the chatbot's greeting).
+    const rawHistory = messages.slice(0, -1).map(
       (msg: { role: string; content: string }) => ({
         role: msg.role === "assistant" ? "model" : "user",
         parts: [{ text: msg.content }],
       })
     );
+    // Drop leading "model" turns so the history always starts with "user"
+    const firstUserIdx = rawHistory.findIndex((m: { role: string }) => m.role === "user");
+    const geminiHistory = firstUserIdx >= 0 ? rawHistory.slice(firstUserIdx) : [];
 
     const lastMessage = messages[messages.length - 1];
 
