@@ -8,7 +8,8 @@ const github = "https://github.com/fanatic-hound";
 const iitr = "https://www.iitr.ac.in/";
 const uvic = "https://www.uvic.ca/";
 const wisetech = "https://www.wisetechglobal.com/";
-const omnissa = "https://www.omnissa.com/"
+const omnissa = "https://www.omnissa.com/";
+const triomics = "https://www.triomics.com/";
 
 export {
     resume,
@@ -21,5 +22,6 @@ export {
     iitr,
     uvic,
     wisetech,
-    omnissa
+    omnissa,
+    triomics
 };

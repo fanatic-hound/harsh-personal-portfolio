@@ -2,10 +2,26 @@
 import Headers from "./Headers";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { omnissa, wisetech } from "../../public/Links";
+import { omnissa, triomics, wisetech } from "../../public/Links";
 import ChibiAvatar, { type ChibiEmote } from "./ChibiAvatar";
 
 const workExperienceData = [
+  {
+    role: "Software Engineer - II",
+    company: "Triomics",
+    date: "September 2026 - Present",
+    logo: "/images/Triomics.png",
+    link: triomics,
+    chibiEmote: "research" as ChibiEmote,
+  },
+  {
+    role: "Member of Technical Staff - II",
+    company: "Omnissa LLC",
+    date: "July 2026 - September 2026",
+    logo: "/images/Omnissa.png",
+    link: omnissa,
+    chibiEmote: "security" as ChibiEmote,
+  },
   {
     role: "Software Engineer",
     company: "WiseTech Global, IN",
@@ -13,14 +29,6 @@ const workExperienceData = [
     logo: "/images/WiseTech.png",
     link: wisetech,
     chibiEmote: "coding" as ChibiEmote,
-  },
-  {
-    role: "Member of Technical Staff - II",
-    company: "Omnissa LLC",
-    date: "July 2026 - Present",
-    logo: "/images/Omnissa.png",
-    link: omnissa,
-    chibiEmote: "security" as ChibiEmote,
   },
 ];
 
@@ -64,11 +72,10 @@ const WorkExperience = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className={`relative mb-12 md:mb-16 md:w-[calc(50%-2rem)] ${
-                isRight
+              className={`relative mb-12 md:mb-16 md:w-[calc(50%-2rem)] ${isRight
                   ? "md:ml-[calc(50%+2rem)]"
                   : "md:mr-[calc(50%+2rem)]"
-              } ml-10 md:ml-auto`}
+                } ml-10 md:ml-auto`}
             >
               {/* ── Centre node (company logo) ── */}
               <a
@@ -108,11 +115,10 @@ const WorkExperience = () => {
 
               {/* ── Card ── */}
               <div
-                className={`pixel-card pixel-lift p-5 sm:p-6 flex items-center gap-4 ${
-                  isRight
+                className={`pixel-card pixel-lift p-5 sm:p-6 flex items-center gap-4 ${isRight
                     ? "flex-row"
                     : "flex-row md:flex-row-reverse"
-                }`}
+                  }`}
               >
                 <div className={`flex-1 ${isRight ? "" : "md:text-right"}`}>
                   <h3 className="font-pixel text-sm sm:text-base uppercase leading-relaxed mb-2">
