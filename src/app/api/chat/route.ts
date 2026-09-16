@@ -43,21 +43,29 @@ Education:
 - Research Internship at the University of Victoria, BC, Canada (UVic)
 
 Current Role:
-- Member of Technical Staff – II (MTS-2) at Omnissa LLC, Bengaluru (July 2026 - Present)
-- Contributing to Omnissa's flagship Unified Endpoint Management (UEM) platform — an enterprise-grade solution managing millions of endpoints (mobile, desktop, rugged & IoT devices) for Fortune 500 organizations worldwide.
-- Building and enhancing microservices powering device lifecycle management, real-time compliance enforcement & automated policy orchestration across iOS, Android, Windows, macOS & Linux endpoints.
-- Developing high-scale device telemetry ingestion pipelines and event-driven workflows to process millions of device check-ins for real-time visibility and proactive security posture management.
-- Implementing zero-trust security policy engine components, conditional access rules, certificate-based authentication integrations & automated threat-response workflows.
-- Contributing to MDM/MAM/MCM backend services for seamless app deployment, configuration management & secure content distribution at enterprise scale.
+- Software Engineer - II at Triomics (September 2026 - Present)
+- Developing generative AI products for oncology to serve cancer patients, oncologists, and leading hospitals and cancer centers worldwide.
+- Working across Triomics' core healthcare AI platforms:
+  * PRISM: AI-powered clinical trial matching engine that analyzes complex, unstructured electronic health records (EHRs) to match cancer patients with relevant precision oncology clinical trials.
+  * Symphony: Clinical visit preparation platform that synthesizes longitudinal patient histories, clinical notes, and genomic data to assist oncologists before patient appointments.
+  * Harmony: Autonomous cancer registry curation and data extraction platform that transforms messy medical records into structured, high-fidelity real-world data (RWD) for hospitals and cancer research.
+- Engineering scalable backend systems, LLM-powered data pipelines, and healthcare integrations to streamline clinical workflows and improve patient care decisions.
 
-Previous Role:
+Previous Roles:
+- Member of Technical Staff – II (MTS-2) at Omnissa LLC, Bengaluru (July 2026 - September 2026)
+- Contributed to Omnissa's flagship Unified Endpoint Management (UEM) platform — an enterprise-grade solution managing millions of endpoints (mobile, desktop, rugged & IoT devices) for Fortune 500 organizations worldwide.
+- Built and enhanced microservices powering device lifecycle management, real-time compliance enforcement & automated policy orchestration across iOS, Android, Windows, macOS & Linux endpoints.
+- Developed high-scale device telemetry ingestion pipelines and event-driven workflows to process millions of device check-ins for real-time visibility and proactive security posture management.
+- Implemented zero-trust security policy engine components, conditional access rules, certificate-based authentication integrations & automated threat-response workflows.
+- Contributed to MDM/MAM/MCM backend services for seamless app deployment, configuration management & secure content distribution at enterprise scale.
+
 - Software Engineer at WiseTech Global, India (July 2024 - May 2026)
 - Engineered multi-agent AI orchestration platform, optimized AWS cloud APIs, modernized legacy monoliths into scalable microservices.
 
 Professional Summary:
 - Self-taught Software Engineer with a Mechanical Engineering degree from IIT Roorkee
-- Currently working as MTS-2 at Omnissa, building enterprise-grade UEM platform managing millions of endpoints
-- Previously worked at WiseTech Global as Software Engineer building AI-powered orchestration platforms and enterprise APIs
+- Currently working as Software Engineer - II at Triomics, building AI-powered healthcare platforms (PRISM, Symphony, Harmony) that empower hospitals, oncologists, and serve cancer patients
+- Previously worked as MTS-2 at Omnissa, building enterprise-grade UEM platforms managing millions of endpoints, and as Software Engineer at WiseTech Global building AI-powered orchestration platforms and enterprise APIs
 - Strong foundation in software development with a focus on problem-solving and clean, production-level code
 - Experience spans both mechanical and software engineering, providing a unique perspective
 - Active competitive programmer on Codeforces (handle: FanaticHound) and Leetcode (handle: FanaticHound)
@@ -112,7 +120,11 @@ export async function POST(req: NextRequest) {
     const resumeText = await getResumeText();
     const systemPrompt = buildSystemPrompt(resumeText);
 
-    const modelName = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+    const rawModel = process.env.GEMINI_MODEL;
+    const modelName =
+      !rawModel || rawModel === "gemini-2.0-flash"
+        ? "gemini-3.6-flash"
+        : rawModel;
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
