@@ -1,7 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  GoogleGenerativeAIAbortError,
+  type GenerationConfig,
+} from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
+
+// Vercel's default function limit can be as low as 10s, which a thinking
+// model can exceed. 60s is the highest value allowed on every plan.
+export const maxDuration = 60;
+
+// Abort the Gemini call before Vercel kills the function, so the client gets
+// a proper JSON error instead of a FUNCTION_INVOCATION_TIMEOUT.
+const GEMINI_TIMEOUT_MS = 45_000;
 
 // Cache the resume text so we only read the file once
 let cachedResumeText: string | null = null;
@@ -127,10 +139,13 @@ export async function POST(req: NextRequest) {
         : rawModel;
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: modelName,
-      systemInstruction: systemPrompt,
-    });
+    const model = genAI.getGenerativeModel(
+      {
+        model: modelName,
+        systemInstruction: systemPrompt,
+      },
+      { timeout: GEMINI_TIMEOUT_MS }
+    );
 
     // Convert chat messages from OpenAI format to Gemini format.
     // Gemini uses "user" and "model" roles (not "assistant").
@@ -148,21 +163,40 @@ export async function POST(req: NextRequest) {
 
     const lastMessage = messages[messages.length - 1];
 
+    // Gemini 3.x models think by default ("medium"), which is slow and counts
+    // toward maxOutputTokens. Short portfolio answers only need LOW.
+    // thinkingConfig isn't in this SDK's types yet, but it is sent through
+    // to the API as-is.
+    const generationConfig: GenerationConfig & {
+      thinkingConfig?: { thinkingLevel: string };
+    } = {
+      maxOutputTokens: 1024,
+      temperature: 0.7,
+      ...(modelName.startsWith("gemini-3")
+        ? { thinkingConfig: { thinkingLevel: "LOW" } }
+        : {}),
+    };
+
     const chat = model.startChat({
       history: geminiHistory,
-      generationConfig: {
-        maxOutputTokens: 512,
-        temperature: 0.7,
-      },
+      generationConfig,
     });
 
+    const startedAt = Date.now();
     const result = await chat.sendMessage(lastMessage.content);
+    console.log(`Gemini (${modelName}) responded in ${Date.now() - startedAt}ms`);
     const reply =
       result.response.text() || "Sorry, I couldn't generate a response.";
 
     return NextResponse.json({ reply });
   } catch (error) {
     console.error("Chat API error:", error);
+    if (error instanceof GoogleGenerativeAIAbortError) {
+      return NextResponse.json(
+        { error: "The AI took too long to respond. Please try again." },
+        { status: 504 }
+      );
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
